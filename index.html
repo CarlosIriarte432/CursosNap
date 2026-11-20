@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AcademiaPro | Formación y Capacitación</title>
+
+  <!-- Google Fonts: Plus Jakarta Sans + Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Plus Jakarta Sans', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Animaciones de aparición al hacer scroll */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Animación flotante sutil para badges */
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-6px); }
+    }
+    .animate-float {
+      animation: floatSlow 4s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-blue-600 selection:text-white">
+
+  <!-- Toast de notificaciones -->
+  <div id="toastContainer" class="fixed bottom-5 right-5 z-[60] flex flex-col gap-2"></div>
+
+  <!-- Navbar -->
+  <header class="sticky top-0 z-40 bg-slate-950/85 backdrop-blur-md border-b border-white/10 text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      <a href="#" class="flex items-center gap-2.5 font-display font-extrabold text-xl tracking-tight">
+        <span class="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-400 text-slate-950 flex items-center justify-center shadow-lg shadow-blue-500/20">
+          <i class="fa-solid fa-graduation-cap text-base"></i>
+        </span>
+        Academia<span class="text-cyan-400">Pro</span>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+        <a href="#cursos" class="hover:text-cyan-400 transition">Catálogo</a>
+        <a href="#beneficios" class="hover:text-cyan-400 transition">Metodología</a>
+        <a href="#ubicacion" class="hover:text-cyan-400 transition">Ubicación</a>
+        <a href="#contacto" class="hover:text-cyan-400 transition">Contacto</a>
+      </nav>
+
+      <!-- Acciones de Usuario y Carrito -->
+      <div class="flex items-center gap-3">
+        <button id="openCartBtn" class="relative p-2 text-slate-300 hover:text-cyan-400 transition" title="Ver carrito">
+          <i class="fa-solid fa-cart-shopping text-lg"></i>
+          <span id="cartBadge" class="hidden absolute -top-0.5 -right-0.5 bg-cyan-400 text-slate-950 text-[10px] font-extrabold w-5 h-5 rounded-full flex items-center justify-center">
+            0
+          </span>
+        </button>
+
+        <div id="authSection" class="flex items-center gap-2"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO CON IMAGEN DE FONDO Y GLASSMORPHISM -->
+  <section class="relative min-h-[85vh] flex items-center overflow-hidden bg-slate-550 text-white">
+    <!-- Imagen de fondo -->
+    <div class="absolute inset-0">
+      <img
+        src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1920&q=80"
+        alt="Sala de capacitación moderna"
+        class="w-full h-full object-cover opacity-100 scale-105"
+      />
+      <div class="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-750/90 to-slate-900/60"></div>
+      <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent"></div>
+    </div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 grid lg:grid-cols-12 gap-12 items-center w-full">
+      <div class="lg:col-span-7 reveal active">
+        <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/15 text-cyan-300 text-xs font-semibold px-3.5 py-1.5 rounded-full mb-6">
+          <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+          Matrículas Abiertas • Modalidad Presencial y Online
+        </div>
+
+        <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.1] tracking-tight mb-6">
+          Domina las habilidades que el mercado <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400">realmente exige</span>
+        </h1>
+
+        <p class="text-slate-300 text-lg sm:text-xl leading-relaxed mb-8 max-w-2xl">
+          Programas prácticos impartidos por especialistas activos. Inscríbete en minutos, accede a tu aula virtual y obtén certificación verificable.
+        </p>
+
+        <div class="flex flex-wrap gap-4">
+          <a href="#cursos" class="bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-semibold px-7 py-3.5 rounded-xl shadow-lg shadow-blue-600/30 transition transform hover:-translate-y-0.5">
+            Explorar Catálogo
+          </a>
+          <button id="heroRegisterBtn" class="bg-white/10 hover:bg-white/15 backdrop-blur-md border border-white/20 text-white font-semibold px-7 py-3.5 rounded-xl transition">
+            Crear Cuenta Gratis
+          </button>
+        </div>
+      </div>
+
+      <!-- Tarjeta flotante Glassmorphism -->
+      <div class="lg:col-span-5 hidden lg:block reveal active">
+        <div class="bg-white/10 backdrop-blur-xl border border-white/15 rounded-3xl p-7 shadow-2xl space-y-6 animate-float">
+          <div class="flex items-center justify-between border-b border-white/10 pb-4">
+            <div>
+              <p class="text-xs uppercase tracking-wider text-cyan-300 font-semibold">Impacto Comprobado</p>
+              <h3 class="font-display font-bold text-xl mt-0.5">Resultados de Alumnos</h3>
+            </div>
+            <div class="w-11 h-11 rounded-2xl bg-cyan-400/20 text-cyan-300 flex items-center justify-center text-xl">
+              <i class="fa-solid fa-chart-line"></i>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+            <div class="bg-slate-950/50 rounded-2xl p-4 border border-white/5">
+              <p class="font-display text-3xl font-extrabold text-white">+1.400</p>
+              <p class="text-xs text-slate-400 mt-1">Egresados certificados</p>
+            </div>
+            <div class="bg-slate-950/50 rounded-2xl p-4 border border-white/5">
+              <p class="font-display text-3xl font-extrabold text-cyan-400">4.9/5</p>
+              <p class="text-xs text-slate-400 mt-1">Satisfacción promedio</p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3 bg-emerald-500/15 border border-emerald-400/20 rounded-xl p-3.5 text-sm text-emerald-200">
+            <i class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
+            <span>Certificados con código QR validable en línea.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATÁLOGO DE CURSOS -->
+  <section id="cursos" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 reveal">
+      <div>
+        <span class="text-xs font-bold uppercase tracking-widest text-blue-600">Oferta Académica</span>
+        <h2 class="font-display text-3xl sm:text-4xl font-extrabold text-slate-900 mt-1">Nuestros Cursos</h2>
+        <p class="text-slate-600 mt-2">Agrega programas al carrito o revisa el temario detallado de cada uno.</p>
+      </div>
+
+      <div class="relative w-full md:w-80">
+        <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-slate-400 text-sm"></i>
+        <input
+          id="searchInput"
+          type="text"
+          placeholder="Buscar por nombre..."
+          class="w-full pl-11 pr-4 py-3 bg-white border border-slate-200 rounded-xl text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
+    </div>
+
+    <div id="categoryFilters" class="flex flex-wrap gap-2 mb-10 reveal"></div>
+    <div id="coursesGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-7"></div>
+  </section>
+
+  <!-- METODOLOGÍA / BENEFICIOS -->
+  <section id="beneficios" class="bg-slate-900 text-white py-20 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="text-center max-w-2xl mx-auto mb-14 reveal">
+        <span class="text-xs font-bold uppercase tracking-widest text-cyan-400">Por qué elegirnos</span>
+        <h2 class="font-display text-3xl sm:text-4xl font-extrabold mt-2">Diseñado para que aprendas de verdad</h2>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="reveal p-7 rounded-2xl bg-white/5 border border-white/10 hover:border-cyan-400/40 transition">
+          <div class="w-12 h-12 rounded-xl bg-blue-500/20 text-cyan-400 flex items-center justify-center mb-5 text-xl">
+            <i class="fa-solid fa-certificate"></i>
+          </div>
+          <h3 class="font-display font-bold text-xl mb-2">Certificación Verificable</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">Diploma digital descargable con folio único para respaldar tu currículum y perfil de LinkedIn.</p>
+        </div>
+
+        <div class="reveal p-7 rounded-2xl bg-white/5 border border-white/10 hover:border-cyan-400/40 transition">
+          <div class="w-12 h-12 rounded-xl bg-blue-500/20 text-cyan-400 flex items-center justify-center mb-5 text-xl">
+            <i class="fa-solid fa-chalkboard-user"></i>
+          </div>
+          <h3 class="font-display font-bold text-xl mb-2">Relatores en Ejercicio</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">Nada de teoría obsoleta: aprendes con casos reales, plantillas editables y resolución de dudas.</p>
+        </div>
+
+        <div class="reveal p-7 rounded-2xl bg-white/5 border border-white/10 hover:border-cyan-400/40 transition">
+          <div class="w-12 h-12 rounded-xl bg-blue-500/20 text-cyan-400 flex items-center justify-center mb-5 text-xl">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <h3 class="font-display font-bold text-xl mb-2">Acceso Inmediato y Seguro</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">Paga con débito, crédito en cuotas o transferencia y habilita tu aula virtual en segundos.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- UBICACIÓN + GOOGLE MAPS -->
+  <section id="ubicacion" class="py-20 bg-white border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-12 gap-10 items-center">
+        <div class="lg:col-span-5 reveal space-y-6">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-widest text-blue-600">Visítanos</span>
+            <h2 class="font-display text-3xl sm:text-4xl font-extrabold text-slate-900 mt-1">Nuestra Ubicación</h2>
+            <p class="text-slate-600 mt-3 text-sm leading-relaxed">
+              Contamos con salas equipadas para cursos presenciales y atención directa para empresas y alumnos.
+            </p>
+          </div>
+
+          <div class="space-y-4 text-sm">
+            <div class="flex items-start gap-3.5">
+              <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                <i class="fa-solid fa-location-dot"></i>
+              </div>
+              <div>
+                <p class="font-bold text-slate-900">Casa Matriz</p>
+                <p class="text-slate-600">Av. Balmaceda 1234, Oficina 305, La Serena / Coquimbo, Chile</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3.5">
+              <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                <i class="fa-regular fa-clock"></i>
+              </div>
+              <div>
+                <p class="font-bold text-slate-900">Horario de Atención</p>
+                <p class="text-slate-600">Lunes a Viernes: 09:00 a 18:30 hrs • Sábados: 09:30 a 13:00 hrs</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3.5">
+              <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                <i class="fa-solid fa-phone"></i>
+              </div>
+              <div>
+                <p class="font-bold text-slate-900">Teléfono y WhatsApp</p>
+                <p class="text-slate-600">+56 9 1234 5678 • contacto@academiapro.cl</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mapa Google Maps -->
+        <div class="lg:col-span-7 reveal">
+          <div class="rounded-3xl overflow-hidden shadow-xl border border-slate-200 h-[380px] bg-slate-100">
+            <iframe
+              title="Ubicación AcademiaPro"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d55331.25849059994!2d-71.2886259!3d-29.9026691!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9691ca7b61724c51%3A0x8c166039402581d!2sLa%20Serena%2C%20Coquimbo!5e0!3m2!1ses-419!2scl!4v1700000000000!5m2!1ses-419!2scl"
+              class="w-full h-full border-0"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORMULARIO DE CONTACTO ROBUSTO -->
+  <section id="contacto" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="bg-slate-900 rounded-3xl overflow-hidden shadow-2xl grid lg:grid-cols-12 reveal">
+      <div class="lg:col-span-5 p-8 sm:p-12 bg-gradient-to-br from-blue-600 to-slate-900 text-white flex flex-col justify-between">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-widest text-cyan-300">Hablemos</span>
+          <h2 class="font-display text-3xl font-extrabold mt-2 mb-4">¿Tienes dudas o buscas capacitar a tu equipo?</h2>
+          <p class="text-blue-100 text-sm leading-relaxed">
+            Completa el formulario y un asesor comercial o académico te responderá en menos de 24 horas hábiles.
+          </p>
+        </div>
+
+        <div class="mt-10 space-y-4">
+          <p class="text-xs uppercase tracking-wider text-blue-200 font-semibold">Atención directa</p>
+          <a href="https://wa.me/56900000000" target="_blank" class="inline-flex items-center gap-2.5 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-5 py-3 rounded-xl text-sm transition">
+            <i class="fa-brands fa-whatsapp text-lg"></i> Escribir por WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <div class="lg:col-span-7 p-8 sm:p-12 bg-white">
+        <form id="contactForm" class="space-y-5">
+          <div class="grid sm:grid-cols-2 gap-5">
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1.5">Nombre completo *</label>
+              <input type="text" required placeholder="Ej: Camila Rojas" class="w-full px-4 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1.5">Teléfono / WhatsApp *</label>
+              <input type="tel" required placeholder="+56 9 1234 5678" class="w-full px-4 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            </div>
+          </div>
+
+          <div class="grid sm:grid-cols-2 gap-5">
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1.5">Correo electrónico *</label>
+              <input type="email" required placeholder="camila@empresa.cl" class="w-full px-4 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1.5">Motivo de consulta *</label>
+              <select required class="w-full px-4 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <option value="">Selecciona una opción...</option>
+                <option value="alumno">Consulta sobre un curso</option>
+                <option value="empresa">Cotización para empresas (B2B)</option>
+                <option value="sence">Consulta sobre franquicia / facturación</option>
+                <option value="soporte">Soporte aula virtual</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1.5">Mensaje *</label>
+            <textarea rows="4" required placeholder="Cuéntanos qué curso te interesa o cuántas personas deseas capacitar..." class="w-full px-4 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+          </div>
+
+          <button type="submit" class="w-full sm:w-auto bg-slate-900 hover:bg-blue-600 text-white font-semibold px-8 py-3 rounded-xl text-sm transition flex items-center justify-center gap-2">
+            <i class="fa-regular fa-paper-plane"></i> Enviar Mensaje
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER COMPLETO -->
+  <footer class="bg-slate-950 text-slate-400 border-t border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
+      <!-- Columna 1: Marca -->
+      <div class="space-y-4">
+        <a href="#" class="flex items-center gap-2 font-display font-extrabold text-xl text-white">
+          <span class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-cyan-400 text-slate-950 flex items-center justify-center">
+            <i class="fa-solid fa-graduation-cap text-sm"></i>
+          </span>
+          Academia<span class="text-cyan-400">Pro</span>
+        </a>
+        <p class="text-sm leading-relaxed">
+          Impulsamos el desarrollo profesional y corporativo con formación práctica, certificada y actualizada.
+        </p>
+        <div class="flex gap-3 pt-1">
+          <a href="#" class="w-9 h-9 rounded-lg bg-white/5 hover:bg-blue-600 hover:text-white flex items-center justify-center transition"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" class="w-9 h-9 rounded-lg bg-white/5 hover:bg-blue-600 hover:text-white flex items-center justify-center transition"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a href="#" class="w-9 h-9 rounded-lg bg-white/5 hover:bg-blue-600 hover:text-white flex items-center justify-center transition"><i class="fa-brands fa-facebook-f"></i></a>
+        </div>
+      </div>
+
+      <!-- Columna 2: Navegación -->
+      <div>
+        <h4 class="font-display font-bold text-white text-sm uppercase tracking-wider mb-4">Navegación</h4>
+        <ul class="space-y-2.5 text-sm">
+          <li><a href="#cursos" class="hover:text-cyan-400 transition">Catálogo de Cursos</a></li>
+          <li><a href="#beneficios" class="hover:text-cyan-400 transition">Metodología</a></li>
+          <li><a href="#ubicacion" class="hover:text-cyan-400 transition">Ubicación</a></li>
+          <li><a href="#contacto" class="hover:text-cyan-400 transition">Contacto Empresas</a></li>
+        </ul>
+      </div>
+
+      <!-- Columna 3: Áreas -->
+      <div>
+        <h4 class="font-display font-bold text-white text-sm uppercase tracking-wider mb-4">Áreas de Estudio</h4>
+        <ul class="space-y-2.5 text-sm">
+          <li><a href="#cursos" class="hover:text-cyan-400 transition">Gestión y Negocios</a></li>
+          <li><a href="#cursos" class="hover:text-cyan-400 transition">Operaciones y Seguridad</a></li>
+          <li><a href="#cursos" class="hover:text-cyan-400 transition">Marketing Digital</a></li>
+          <li><a href="#cursos" class="hover:text-cyan-400 transition">Liderazgo Corporativo</a></li>
+        </ul>
+      </div>
+
+      <!-- Columna 4: Contacto y Medios de Pago -->
+      <div>
+        <h4 class="font-display font-bold text-white text-sm uppercase tracking-wider mb-4">Contacto</h4>
+        <ul class="space-y-2.5 text-sm">
+          <li><i class="fa-solid fa-envelope text-cyan-400 mr-2"></i> contacto@academiapro.cl</li>
+          <li><i class="fa-solid fa-phone text-cyan-400 mr-2"></i> +56 9 1234 5678</li>
+          <li><i class="fa-solid fa-location-dot text-cyan-400 mr-2"></i> La Serena, Chile</li>
+        </ul>
+        <div class="mt-5 pt-4 border-t border-white/10">
+          <p class="text-xs text-slate-500 mb-2">Medios de pago aceptados</p>
+          <div class="flex gap-2 text-lg text-slate-300">
+            <i class="fa-brands fa-cc-visa"></i>
+            <i class="fa-brands fa-cc-mastercard"></i>
+            <i class="fa-solid fa-building-columns" title="Transferencia"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="border-t border-white/10 py-6 text-center text-xs text-slate-500">
+      <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-2">
+        <p>&copy; 2026 AcademiaPro. Todos los derechos reservados.</p>
+        <div class="flex gap-4">
+          <a href="#" class="hover:text-slate-300">Términos y Condiciones</a>
+          <a href="#" class="hover:text-slate-300">Política de Privacidad</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= DRAWER: CARRITO DE COMPRAS ================= -->
+  <div id="cartOverlay" class="fixed inset-0 z-50 hidden bg-slate-950/60 backdrop-blur-sm">
+    <div class="fixed right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl flex flex-col">
+      <div class="p-5 border-b border-slate-200 flex items-center justify-between">
+        <h3 class="font-display font-bold text-lg text-slate-900 flex items-center gap-2">
+          <i class="fa-solid fa-cart-shopping text-blue-600"></i> Tu Carrito
+        </h3>
+        <button id="closeCartBtn" class="text-slate-400 hover:text-slate-700 text-xl p-1">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div id="cartItemsContainer" class="flex-1 overflow-y-auto p-5 space-y-4"></div>
+
+      <div class="p-5 border-t border-slate-200 bg-slate-50 space-y-4">
+        <div class="flex justify-between items-center text-base">
+          <span class="text-slate-600 font-medium">Total a pagar</span>
+          <span id="cartTotal" class="font-display text-2xl font-extrabold text-slate-900">$0</span>
+        </div>
+        <button id="checkoutBtn" class="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-xl transition flex items-center justify-center gap-2">
+          <i class="fa-solid fa-lock"></i> Finalizar Compra (Demo)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: DETALLE DEL CURSO ================= -->
+  <div id="courseModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/70 backdrop-blur-sm p-4">
+    <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+      <div class="p-6 border-b border-slate-200 flex justify-between items-start gap-4">
+        <div>
+          <span id="modalCategory" class="text-xs font-semibold uppercase tracking-wider text-blue-600"></span>
+          <h3 id="modalTitle" class="font-display text-2xl font-bold text-slate-900 mt-1"></h3>
+        </div>
+        <button id="closeCourseModalBtn" class="text-slate-400 hover:text-slate-700 text-xl p-1">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="p-6 space-y-6">
+        <div class="flex flex-wrap gap-4 text-sm text-slate-600">
+          <span><i class="fa-regular fa-clock text-blue-600 mr-1"></i> <strong id="modalDuration"></strong></span>
+          <span><i class="fa-solid fa-laptop text-blue-600 mr-1"></i> <strong id="modalModality"></strong></span>
+          <span><i class="fa-solid fa-tag text-blue-600 mr-1"></i> <strong id="modalPrice" class="text-slate-900"></strong></span>
+        </div>
+
+        <p id="modalDescription" class="text-slate-600 text-sm leading-relaxed"></p>
+
+        <div>
+          <h4 class="font-display font-bold text-slate-900 mb-3">Temario del curso</h4>
+          <ul id="modalSyllabus" class="space-y-2 text-sm text-slate-700"></ul>
+        </div>
+
+        <div class="pt-4 border-t border-slate-200 flex justify-end gap-3">
+          <button id="modalAddToCartBtn" class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2.5 rounded-xl text-sm transition flex items-center justify-center gap-2">
+            <i class="fa-solid fa-cart-plus"></i> Agregar al carrito
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: LOGIN / REGISTRO ================= -->
+  <div id="authModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/70 backdrop-blur-sm p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full shadow-2xl overflow-hidden">
+      <div class="flex border-b border-slate-200">
+        <button id="tabLogin" class="flex-1 py-3.5 text-sm font-bold text-blue-600 border-b-2 border-blue-600 bg-blue-50/40">
+          Iniciar Sesión
+        </button>
+        <button id="tabRegister" class="flex-1 py-3.5 text-sm font-bold text-slate-500 hover:text-slate-700">
+          Crear Cuenta
+        </button>
+      </div>
+
+      <div class="p-6">
+        <form id="loginForm" class="space-y-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Correo electrónico</label>
+            <input id="loginEmail" type="email" required placeholder="alumno@ejemplo.cl" class="w-full px-3.5 py-2.5 text-sm border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Contraseña</label>
+            <input id="loginPassword" type="password" required placeholder="••••••••" class="w-full px-3.5 py-2.5 text-sm border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          </div>
+          <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-xl text-sm transition">
+            Ingresar
+          </button>
+        </form>
+
+        <form id="registerForm" class="space-y-4 hidden">
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Nombre completo</label>
+            <input id="regName" type="text" required placeholder="Ej: Juan Pérez" class="w-full px-3.5 py-2.5 text-sm border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Correo electrónico</label>
+            <input id="regEmail" type="email" required placeholder="juan@ejemplo.cl" class="w-full px-3.5 py-2.5 text-sm border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Contraseña</label>
+            <input id="regPassword" type="password" required minlength="4" placeholder="Mínimo 4 caracteres" class="w-full px-3.5 py-2.5 text-sm border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          </div>
+          <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-xl text-sm transition">
+            Registrarme
+          </button>
+        </form>
+
+        <button id="closeAuthModalBtn" class="mt-4 w-full text-center text-xs text-slate-500 hover:text-slate-700">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: MIS CURSOS ================= -->
+  <div id="myCoursesModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/70 backdrop-blur-sm p-4">
+    <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[85vh] flex flex-col shadow-2xl">
+      <div class="p-6 border-b border-slate-200 flex justify-between items-center">
+        <div>
+          <h3 class="font-display text-xl font-bold text-slate-900">Mis Cursos</h3>
+          <p id="myCoursesUserLabel" class="text-xs text-slate-500 mt-0.5"></p>
+        </div>
+        <button id="closeMyCoursesBtn" class="text-slate-400 hover:text-slate-700 text-xl p-1">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div id="myCoursesList" class="p-6 overflow-y-auto space-y-4"></div>
+    </div>
+  </div>
+
+  <script src="./frontend/js/app.js"></script>
+</body>
+</html>
