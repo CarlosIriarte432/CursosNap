@@ -43,24 +43,8 @@
   <!-- Toast de notificaciones (arriba a la derecha para no chocar con WhatsApp) -->
   <div id="toastContainer" class="fixed top-20 right-5 z-[60] flex flex-col gap-2"></div>
 
-  <!-- Barra Superior Minimalista -->
-  <div class="hidden md:block bg-sky-50/70 border-b border-sky-100 text-slate-500 text-xs">
-    <div class="max-w-7xl mx-auto px-6 h-9 flex items-center justify-between">
-      <div class="flex items-center gap-6">
-        <span><i class="fa-solid fa-phone text-sky-600 mr-1.5"></i> +56 9 1234 5678</span>
-        <span><i class="fa-regular fa-clock text-sky-600 mr-1.5"></i> Lun a Vie 09:00 - 18:30</span>
-        <span><i class="fa-solid fa-location-dot text-sky-600 mr-1.5"></i> La Serena / Online Todo Chile</span>
-      </div>
-      <div class="flex items-center gap-4 text-slate-400">
-        <a href="#" class="hover:text-sky-600 transition"><i class="fa-brands fa-instagram"></i></a>
-        <a href="#" class="hover:text-sky-600 transition"><i class="fa-brands fa-linkedin-in"></i></a>
-        <a href="#" class="hover:text-sky-600 transition"><i class="fa-brands fa-facebook-f"></i></a>
-      </div>
-    </div>
-  </div>
-
-  <!-- Navbar Blanco y Limpio -->
-  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-100">
+  <!-- Navbar oculto al inicio (aparece al hacer scroll) -->
+  <header id="mainNavbar" class="fixed top-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-100 shadow-sm -translate-y-full opacity-0 pointer-events-none transition-all duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between gap-4">
       <a href="#" class="flex items-center gap-2.5 font-display font-bold text-xl text-slate-800 tracking-tight">
         <span class="w-9 h-9 rounded-full bg-sky-50 text-sky-600 border border-sky-200 flex items-center justify-center">
@@ -90,20 +74,26 @@
     </div>
   </header>
 
-  <!-- HERO LIMPIO A PANTALLA COMPLETA -->
-  <section class="relative min-h-[78vh] flex items-center justify-center overflow-hidden bg-slate-900">
+  <!-- HERO A PANTALLA COMPLETA (100vh) -->
+  <section class="relative min-h-screen flex items-center justify-center overflow-hidden bg-slate-900">
     <img
       src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1920&q=80"
       alt="Profesionales de la salud"
       class="absolute inset-0 w-full h-full object-cover opacity-55"
     />
-    <!-- Overlay suave azulado para lectura limpia sin oscurecer de más -->
     <div class="absolute inset-0 bg-gradient-to-b from-slate-900/50 via-sky-950/45 to-slate-900/65"></div>
 
-    <div class="relative z-10 max-w-3xl mx-auto px-6 text-center text-white reveal active">
-      <p class="text-xs sm:text-sm uppercase tracking-[0.25em] text-sky-200 font-semibold mb-4">
-        Capacitación Continua en Salud
-      </p>
+    <!-- Logo superior central -->
+    <div class="absolute top-10 sm:top-14 left-1/2 -translate-x-1/2 z-30">
+      <img
+        src="frontend/src/logo.png"
+        alt="Logo de la empresa"
+        class="h-24 sm:h-28 w-auto object-contain drop-shadow-md"
+      />
+    </div>
+
+    <div class="relative z-10 max-w-3xl mx-auto px-6 text-center text-white reveal active pt-12">
+
       <h1 class="font-display text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-tight mb-6">
         Formación clínica de excelencia para profesionales de la salud
       </h1>
@@ -119,6 +109,11 @@
         </a>
       </div>
     </div>
+
+    <!-- Indicador sutil de scroll -->
+    <a href="#especialidades" class="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/70 hover:text-white transition animate-bounce">
+      <i class="fa-solid fa-chevron-down text-xl"></i>
+    </a>
   </section>
 
   <!-- SECCIÓN ESPECIALIDADES (Estilo limpio con círculos) -->

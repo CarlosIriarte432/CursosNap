@@ -526,6 +526,22 @@ function closeMyCoursesModal() {
   modal.classList.remove("flex");
 }
 
+// ================= NAVBAR AL HACER SCROLL =================
+function initNavbarScroll() {
+  const navbar = document.getElementById("mainNavbar");
+  if (!navbar) return;
+
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 120) {
+      navbar.classList.remove("-translate-y-full", "opacity-0", "pointer-events-none");
+      navbar.classList.add("translate-y-0", "opacity-100", "pointer-events-auto");
+    } else {
+      navbar.classList.add("-translate-y-full", "opacity-0", "pointer-events-none");
+      navbar.classList.remove("translate-y-0", "opacity-100", "pointer-events-auto");
+    }
+  });
+}
+
 // ================= FORMULARIO DE CONTACTO =================
 document.getElementById("contactForm").addEventListener("submit", (e) => {
   e.preventDefault();
@@ -549,9 +565,12 @@ document.getElementById("closeCourseModalBtn").addEventListener("click", closeCo
 document.getElementById("closeAuthModalBtn").addEventListener("click", closeAuthModal);
 document.getElementById("closeMyCoursesBtn").addEventListener("click", closeMyCoursesModal);
 
+
+
 // ================= INIT =================
 renderAuthSection();
 renderCategories();
 renderCourses();
 renderCart();
 initScrollReveal();
+initNavbarScroll();
